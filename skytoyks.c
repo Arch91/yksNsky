@@ -992,7 +992,7 @@ void XRGD_Special(const uint8_t *buffer, uint8_t *out_buffer, long *i) {
 void GRUP_Special(const uint8_t *buffer, uint8_t *out_buffer, long *i) {
 // Есть GRUP, по-сути, стоящие перед самыми первыми объявлениями глобальных переменных (правда, и CELL, видимо, есть такие же не глобальные что-ли...), и в этом случае нужно сделать свап следующих четырёх, и заодно свап по 4 длиной 0x10 всей новой группы. Но есть и другие GRUP, оперирующая как глобальная переменная - тогда и правило ей такое же будет - firstOxlO_nextComplicated
 	long cur_i = *i;
-	int match;
+	int match = 0;
 
 //	if (*(uint32_t*)&buffer[cur_i + 8] == 0x4E50435F) // GRUP before NPC
 //		printf("offset 0x%lX Glob: 0x%lX\n", cur_i, processed_glogal_signature);	
@@ -2207,7 +2207,7 @@ void FourTwoFour_skip(const uint8_t *buffer, uint8_t *out_buffer, long *i) {
 						twoBytes_nextPerFour(buffer, out_buffer, &i);
 					}
 				} else if (current_val == 0x534E414D) { // SNAM
-					if ((buffer[i + 5] < 4) ||
+					if ((buffer[i + 4] < 4) ||
 						(processed_glogal_signature == 0x54455334)) { // TES4's
 					// При LTEX только 1, так копировать
 					// При TES4 string, комментарий к плагину, так копировать
